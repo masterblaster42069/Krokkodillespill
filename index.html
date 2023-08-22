@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: rgb(f0f0f0);
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #game {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #points {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        #firstNum,
+        #secondNum {
+            font-size: 40px;
+            margin: 10px;
+        }
+
+        input[type="text"] {
+            font-size: 20px;
+            padding: 5px;
+            width: 40px;
+            text-align: center;
+            margin: 10px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            background-color: lightskyblue;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div id="points">Point: 0</div>
+    <div id="firstNum"></div>
+    <input type="text"></input>
+    <div id="secondNum"></div>
+    <button onclick="submit()">submit</button>
+    <button onclick="reset()">reset</button>
+
+    <script>
+        let points = 0;
+        let firstNum = 0;
+        let secondNum = 0;
+        let comparisonSymbol = "=, <, >";
+       
+        function reset() {
+            updateNumbers();
+        }
+
+        function updateNumbers() {
+            firstNum = getRandomNumber();
+            secondNum = getRandomNumber();
+            document.getElementById("firstNum").innerHTML = firstNum;
+            document.getElementById("secondNum").innerHTML = secondNum;
+        }
+
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 100);
+        }
+
+        function submit() {
+    let userInput = document.querySelector("input[type='text']").value;
+    if (userInput === "<" || userInput === ">" || userInput === "=") {
+        comparisonSymbol = userInput;
+        compare();
+    } else {
+        alert("Invalid input. Please enter <, >, or =.");
+    }
+}
+
+function compare() {
+    let result;
+    
+    switch (comparisonSymbol) {
+        case "<":
+            result = firstNum < secondNum;
+            break;
+        case ">":
+            result = firstNum > secondNum;
+            break;
+        case "=":
+            result = firstNum === secondNum;
+            break;
+    }
+
+    if (result) {
+        points++;
+        document.getElementById("points").textContent = "Points: " + points;
+
+        if (points >= 10) {
+            alert("Congratulations! You've won the game!");
+            reset();
+        } else {
+            reset();
+        }
+    } else {
+        alert("Incorrect! Try again.");
+        reset();
+    }
+}
+
+
+
+    </script>
+</body>
+</html>
